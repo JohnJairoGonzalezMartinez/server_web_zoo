@@ -24,7 +24,7 @@ app.use( express.json() )
 // GETS
 //------------------------------
 
-app.get( "/get/animals/:id", async (req, res)=>{
+app.get( "/details/get/animals/:id", async (req, res)=>{
   const idQ = req.params.id
   const query = 'SELECT * FROM "Animals" where id=$1'
   dbClient.query( query, [idQ], (error, db_response)=>{
@@ -81,8 +81,13 @@ app.get( "/get/news", async (req, res)=>{
 })
 
 app.get("/*", (req, res)=>{
-  console.log("AQUI :V", req.url)
-  res.sendFile("build/index.html")
+  try {
+    res.sendFile("index.html", { root: "./build"} )  
+  }
+  catch (error) {
+    console.log("\n\n", error, "\n\n\n")
+  }
+  
 })
 
 
